@@ -56,3 +56,7 @@ target/
 # Virtual Environment
 venv
 
+# Secret Values
+__secret__.py
+
+
