@@ -1,0 +1,8 @@
+{% extends 'frame.html' %}
+{% block content_block %}
+  <div id="signin-content">
+    <h1>Sign in with Google Account!</h1>
+    <p>You have to sign in with Google Account to use OI service.</p>
+    <p><a href="{{ url_for('oauth.redirect_to_auth', service='google') }}">Sign in with Google</a></p>
+  </div>
+{% endblock %}
