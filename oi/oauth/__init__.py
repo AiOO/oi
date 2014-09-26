@@ -73,6 +73,7 @@ def catch_code(service):
                         avatar=userinfo['picture']
                 )
                 db_session.add(user)
+                db_session.commit()
             sign_in(user)
         return redirect(url_for('hello'))
     return 'in progress...'
