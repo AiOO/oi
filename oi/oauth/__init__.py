@@ -62,6 +62,8 @@ def catch_code(service):
     auth_session = auth.get_auth_session(**params)
     if service =='google':
         userinfo = auth_session.get('userinfo').json() 
+        if userinfo['verified_email'] is False:
+            return redirect(url_for('index', error='email'))
         with db_session_scope() as db_session:
             google_id = userinfo['id']
             user = get_user_by_google_id(db_session, google_id)

@@ -100,4 +100,8 @@ div#signin-content {
     border-right: none;
   }
 }
+p.error {
+  color: #f00;
+  font-weight: bold;
+}
 
