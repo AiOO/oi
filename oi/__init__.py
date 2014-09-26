@@ -2,10 +2,11 @@ from flask import Flask
 from flask import render_template
 from oi.oauth import oauth
 from oi.db import db_session_scope
-from oi.user import require_sign_in, get_user_in_session
+from oi.user import require_sign_in, sign_out, get_user_in_session
+from oi.util import get_random_string
 
 app = Flask(__name__)
-app.secret_key='lkj213lk12hgjhghj34bgjuhiy23@#$%kjngfkdlsi827r32rc83h'
+app.secret_key = get_random_string(128)
 app.register_blueprint(oauth, url_prefix='/oauth')
 
 @app.route("/")
