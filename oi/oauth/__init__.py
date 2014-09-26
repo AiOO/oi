@@ -45,6 +45,9 @@ def redirect_to_auth(service):
 def catch_code(service):
     """ If it is authorized successfully, get code and request access token.
     """
+    if service not in __auth_map__:
+        abort(404)
+        return
     auth = __auth_map__[service]['auth']
     code = request.args['code']
     params = {
