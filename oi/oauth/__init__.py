@@ -1,11 +1,12 @@
 import json
 
 from flask import Blueprint
-from flask import redirect
-from flask import request
-from flask import flash, url_for
+from flask import abort, redirect, request, url_for
+from oi.db import db_session_scope
+from oi.model import User
 from oi.oauth.oauth_github import auth_github, custom_params_github, decoder_github
 from oi.oauth.oauth_google import auth_google, custom_params_google, decoder_google
+from oi.user import get_user_by_google_id, sign_in
 
 oauth = Blueprint('oauth', __name__)
 
@@ -29,16 +30,16 @@ def get_redirect_uri(service):
 def redirect_to_auth(service):
     """ Take user to login page for OAuth service.
     """
-    if service in __auth_map__:
-        auth = __auth_map__[service]['auth']
-        if 'custom_params' in __auth_map__[service]:
-            params = __auth_map__[service]['custom_params']
-        else:
-            params = dict()
-        params['redirect_uri'] = get_redirect_uri(service)
-        return redirect(auth.get_authorize_url(**params))
+    if service not in __auth_map__:
+        abort(404)
+        return
+    auth = __auth_map__[service]['auth']
+    if 'custom_params' in __auth_map__[service]:
+        params = __auth_map__[service]['custom_params']
     else:
-        flash('Invalid service!')
+        params = dict()
+    params['redirect_uri'] = get_redirect_uri(service)
+    return redirect(auth.get_authorize_url(**params))
 
 @oauth.route('/authorize/<service>')
 def catch_code(service):
@@ -56,8 +57,22 @@ def catch_code(service):
     if 'decoder' in __auth_map__[service]:
         params['decoder'] = __auth_map__[service]['decoder']
     auth_session = auth.get_auth_session(**params)
-    userinfo = auth_session.get('userinfo').json()
-    return 'hello %s!' % userinfo['name'] 
+    if service =='google':
+        userinfo = auth_session.get('userinfo').json() 
+        with db_session_scope() as db_session:
+            google_id = userinfo['id']
+            user = get_user_by_google_id(db_session, google_id)
+            if user is None:
+                user = User(
+                        google_id=google_id,
+                        name=userinfo['name'],
+                        email=userinfo['email'],
+                        avatar=userinfo['picture']
+                )
+                db_session.add(user)
+            sign_in(user)
+        return redirect(url_for('hello'))
+    return 'in progress...'
 
 __auth_map__ = dict()
 register_oauth('github', auth_github, custom_params_github, decoder_github)
