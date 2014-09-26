@@ -58,5 +58,5 @@ venv
 
 # Secret Values
 __secret__.py
-
+secret.db
 
