@@ -60,3 +60,6 @@ venv
 __secret__.py
 secret.db
 
+# Vim stuffs
+*.swp
+
