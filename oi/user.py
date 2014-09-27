@@ -43,6 +43,6 @@ def require_sign_in(func=None, service='google'):
         if check_sign_in(service) == True:
             return func(*args, **kwargs)
         else:
-            return redirect(url_for('oauth.redirect_to_auth', service=service))
+            return redirect(url_for('index'))
     return new_function
 
