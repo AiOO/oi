@@ -4,9 +4,9 @@ from flask import Blueprint
 from flask import abort, redirect, request, url_for
 from oi.db import db_session_scope
 from oi.model import User
-from oi.oauth.oauth_github import auth_github, custom_params_github, decoder_github
-from oi.oauth.oauth_google import auth_google, custom_params_google, decoder_google
 from oi.user import get_user_by_google_id, sign_in
+from oi.oauth.github import auth_github, custom_params_github, decoder_github
+from oi.oauth.google import auth_google, custom_params_google, decoder_google
 
 oauth = Blueprint('oauth', __name__)
 

@@ -8,6 +8,8 @@ auth_github = OAuth2Service(
         authorize_url='https://github.com/login/oauth/authorize',
         access_token_url='https://github.com/login/oauth/access_token',
         base_url='https://api.github.com/')
-custom_params_github = None
+custom_params_github = {
+        'scope': 'repo'
+}
 decoder_github = None
 
