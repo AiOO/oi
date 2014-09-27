@@ -6,26 +6,57 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
   </head>
   <body>
-    <div id="top">
-      <div id="top-left">OI</div>
+    <div id="sidebar">
+      <div id="top">
+        <span>OI</span>
+      </div>
+      {% if user %}
+      <div id="account">
+        <img src="{{ user.avatar }}">
+        <span class="name">{{ user.name }}</span>
+        <div class="buttons">
+          <a class="button">Setting</a>
+          <a class="button">Sign out</a>
+        </div>
+      </div>
+      <div class="label">
+        My repositories
+      </div>
+      {% if user.github_access_token %}
+      <ul id="repositories">
+        {% for repository in user.repositories %}
+        <li><a>{{ repository.name }}</a></li>
+        {% endfor %}
+        <li><a class="button" href="{{ url_for('repository.add_repository') }}">Add Repository</a></li>
+      </ul>
+      {% else %}
+      <div id="signin">
+        <p>You have to sign in with GitHub to add your repository.</p>
+        {% if message %}<p class="error">{{ message }}</p>{% endif %}
+        <a class="button" href="{{ url_for('oauth.redirect_to_auth', service='github') }}">
+          Sign in with GitHub
+        </a>
+      </div>
+      {% endif %}
+      <div class="label">
+        Accessible repositories
+      </div>
+      <ul id="repositories">
+        <li><a>Rust</a></li>
+        <li><a class="button">Add Repository</a></li>
+      </ul>
+      {% else %}
+      <div id="signin">
+        <p>You have to sign in to use OI service.</p>
+        {% if message %}<p class="error">{{ message }}</p>{% endif %}
+        <a class="button" href="{{ url_for('oauth.redirect_to_auth', service='google') }}">
+          Sign in with Google
+        </a>
+      </div>
+      {% endif %}
     </div>
     <div id="content">
       {% block content_block %}
-      <div id="list">
-        <div class="item">
-          <img class="avatar" src="{{ url_for('static', filename='img/starbucks_logo.png') }}" />
-          <div class="name">실행이 되지를 않네요.</div>
-          <div class="content">가나다라마바사</div>
-        </div>
-        <div class="item">
-          <img class="avatar" src="{{ url_for('static', filename='img/starbucks_logo.png') }}" />
-          <div class="name">이런 기능은 어떤가요?</div>
-          <div class="content">A 키를 누르면 우주 정복을 하는거예요.</div>
-        </div>
-      </div>
-      <div id="issue-content">
-        <h1>There is issues!</h1>
-      </div>
       {% endblock %}
     </div>
   </body>

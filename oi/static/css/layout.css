@@ -7,101 +7,91 @@ body {
   min-height: 100%;
   padding: 0;
   margin: 0;
+  font-size: 0.9em;
   font-family: sans-serif;
+  color: #333;
 }
-div#top {
+div#sidebar {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
-  background-color: #DDD;
-  border-bottom: 3px solid #AAA;
+  bottom: 0px;
+  width: 200px;
+  background-color: #333;
+  color: #CCC;
   z-index: 9999;
 }
-div#top-left {
-  position: relative;
-  float: left;
-  height: 40px;
-  line-height: 40px;
-  padding: 0px 12px;
-  color: #101010;
+div#sidebar a.button {
+  background-color: #666;
+  color: #CCC;
+}
+div#sidebar div.label {
+  color: #999;
   font-weight: bold;
+  padding: 12px 12px 6px 12px;
 }
-div#content {
-  display: table;
-  padding-top: 43px;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-}
-div#issue-content {
-  display: table-cell;
-  width: 100%;
-}
-div#list {
-  display: table-cell;
-  width: 320px;
-  min-width: 320px;
-  overflow-y: scroll;
-  border-right: 1px solid #EEE;
-}
-div#list div.item {
-  position: relative;
-  border-bottom: 1px solid #EEE;
+div#signin {
   padding: 12px;
 }
-div#list div.item img.avatar {
-  float: left;
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
+div#signin p {
+  margin: 0 0 12px 0;
 }
-div#list div.item div.name {
-  line-height: 20px;
+div#top {
+  padding: 12px;
+  border-bottom: #444 1px solid;
+}
+div#top span {
+  display: inline-block;
+  color: #fff;
   font-weight: bold;
+  font-size: 60px;
 }
-div#list div.item div.content {
-  line-height: 20px;
+div#account {
+  padding: 12px;
+  border-bottom: #444 1px solid;
 }
-div#signin-content {
-  padding-top: 100px;
-  text-align: center;
+div#account img {
+  width: 28px;
+  height: 28px;
+  margin-right: 3px;
+  vertical-align: top;
 }
-@media (min-width: 512px) and (max-width: 640px) {
-  div#list {
-    width: 256px;
-    min-width: 256px;
-  }
-  div#list div.item img.avatar {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-  }
+div#account span.name {
+  line-height: 28px;
 }
-@media (max-width: 512px) {
-  div#content {
-    display: block;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    padding: 0px;
-  }
-  div#issue-content {
-    display: block;
-    height: 50%;
-    max-height: 50%;
-  }
-  div#list {
-    display: block;
-    width: 100%;
-    max-height: 50%;
-    border-right: none;
-  }
+div#account div.buttons {
+  margin-top: 12px;
+}
+div#account div.buttons a.button {
+  margin-right: 6px;
+}
+ul#repositories {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul#repositories li {
+  padding: 6px 12px;
+  color: #fff;
+}
+ul#repositories li.selected {
+  background-color: #444;
+}
+div#content {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 200px;
+  padding: 12px 24px;
 }
 p.error {
   color: #f00;
   font-weight: bold;
 }
-
+a.button {
+  display: inline-block;
+  padding: 6px;
+  text-decoration: none;
+  background-color: #CCC;
+}

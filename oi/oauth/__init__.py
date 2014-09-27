@@ -4,9 +4,10 @@ from flask import Blueprint
 from flask import abort, redirect, request, url_for
 from oi.db import db_session_scope
 from oi.model import User
-from oi.user import get_user_by_google_id, sign_in
 from oi.oauth.github import auth_github, custom_params_github, decoder_github
 from oi.oauth.google import auth_google, custom_params_google, decoder_google
+from oi.user import check_sign_in, get_user_by_google_id, get_user_in_session
+from oi.user import sign_in
 
 oauth = Blueprint('oauth', __name__)
 
@@ -78,7 +79,20 @@ def catch_code(service):
                 db_session.commit()
             sign_in(user)
         return redirect(url_for('hello'))
-    return 'in progress...'
+    elif service == 'github':
+        if not check_sign_in():
+            return redirect(url_for('index'))
+        with db_session_scope() as db_session:
+            user = get_user_in_session(db_session)
+            if user.github_access_token is None:
+                user.github_access_token = auth_session.access_token
+            else:
+                # TODO: Exchange github account?
+                pass
+            db_session.add(user)
+        return redirect(url_for('hello'))
+    else:
+        abort(404)
 
 __auth_map__ = dict()
 register_oauth('github', auth_github, custom_params_github, decoder_github)
