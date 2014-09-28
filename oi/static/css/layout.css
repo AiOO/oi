@@ -131,8 +131,18 @@ div.issue div.content {
 }
 div.issue div.title {
   line-height: 26px;
+}
+div.issue div.title span.title {
   font-size: 16px;
   font-weight: bold;
+  margin-right: 3px;
+  vertical-align: top;
+}
+div.issue div.title span.label {
+  font-size: 12px;
+  padding: 1px 3px;
+  border: 1px solid;
+  border-left: 6px solid;
 }
 div.issue img.user {
   width: 16px;

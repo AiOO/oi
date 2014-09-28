@@ -6,7 +6,12 @@
     <div class="issue"> 
       <div class="number">#{{ issue.number }}</div>
       <div class="content">
-        <div class="title">{{ issue.title }}</div>
+        <div class="title">
+          <span class="title">{{ issue.title }}</span>
+          {% for label in issue.labels %}
+          <span class="label" style="border-color: #{{ label.color }};">{{ label.name }}</span>
+          {% endfor %}
+        </div>
         <span class="information">Added by {{ issue.user.login }}</span>
         <img class="user" src="{{ issue.user.avatar_url }}">
       </div>
