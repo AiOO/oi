@@ -111,6 +111,7 @@ button.button {
 }
 div.issue {
   padding: 6px 12px;
+  margin-bottom: 6px;
   border: 1px solid #CCC;
 }
 div.issue div.number {
