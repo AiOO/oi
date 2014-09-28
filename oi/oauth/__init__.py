@@ -78,7 +78,7 @@ def catch_code(service):
                 db_session.add(user)
                 db_session.commit()
             sign_in(user)
-        return redirect(url_for('hello'))
+        return redirect(url_for('dashboard'))
     elif service == 'github':
         if not check_sign_in():
             return redirect(url_for('index'))
@@ -90,7 +90,7 @@ def catch_code(service):
                 # TODO: Exchange github account?
                 pass
             db_session.add(user)
-        return redirect(url_for('hello'))
+        return redirect(url_for('dashboard'))
     else:
         abort(404)
 

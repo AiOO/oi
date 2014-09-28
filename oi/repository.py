@@ -41,7 +41,7 @@ def add_repository():
                 url=repository['html_url'],
                 owner_user=user
             ))
-            return redirect('hello')
+            return redirect('dashboard')
         return render_template('repository_add.html',
                                items=repositories,
                                organization=organization,
