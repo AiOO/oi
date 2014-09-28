@@ -1,0 +1,19 @@
+{% extends 'frame.html' %}
+{% block content_block %}
+  <h1>Select Organization</h1>
+  <form>
+  {% for item in items %}
+  <div>
+    <label>
+      <input type="radio" name="organization" value="{{ item.login }}"{{ ' checked' if loop.index == 1 }}>
+      {{ item.login }}
+    </label>
+  </div>
+  {% endfor %}
+  <p>
+    <a class="button" href="javascript:history.back(-1)">Back</a>
+    <button type="submit" class="button">Next</button>
+  </p>
+  </form>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends 'frame.html' %}
+{% block content_block %}
+  <h1>Select Repository</h1>
+  <form method="post">
+  {% for item in items %}
+  <div>
+    <label>
+      <input type="radio" name="repository" value="{{ loop.index }}"{{ ' checked' if loop.index == 1 }}>
+      {{ item.full_name }}
+    </label>
+  </div>
+  {% endfor %}
+  <p><button type="submit" class="button">Add this repository</button></p>
+  {% if not organization %}
+  <p><a href="{{ url_for('repository.add_repository', organization='') }}">I want to add my organization's repository.</a></p>
+  {% endif %}
+  </form>
+{% endblock %}
+

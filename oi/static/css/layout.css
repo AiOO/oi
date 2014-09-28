@@ -21,7 +21,8 @@ div#sidebar {
   color: #CCC;
   z-index: 9999;
 }
-div#sidebar a.button {
+div#sidebar a.button,
+div#sidebar button.button {
   background-color: #666;
   color: #CCC;
 }
@@ -62,7 +63,8 @@ div#account span.name {
 div#account div.buttons {
   margin-top: 12px;
 }
-div#account div.buttons a.button {
+div#account div.buttons a.button,
+div#account div.buttons button.button {
   margin-right: 6px;
 }
 ul#repositories {
@@ -89,9 +91,16 @@ p.error {
   color: #f00;
   font-weight: bold;
 }
-a.button {
+a.button,
+button.button {
   display: inline-block;
   padding: 6px;
   text-decoration: none;
   background-color: #CCC;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: sans-serif;
 }
+

@@ -18,16 +18,20 @@ def get_user_in_session(db_session):
 def set_expire():
     session['expires'] = timestamp() + 30 * TIME_MINUTES
 
-def sign_in(user, service='google'):
+def sign_in(user):
     session['user_id'] = user.id
+    session['github_access_token'] = user.github_access_token
     set_expire()
 
 def sign_out():
     session.pop('user_id', None)
+    session.pop('github_access_token', None)
     session.pop('expires', None)
 
-def check_sign_in(service='google'):
+def check_sign_in(need_github=False):
     if 'expires' not in session:
+        return False
+    if need_github and session['github_access_token'] is None:
         return False
     if session['expires'] < timestamp():
         sign_out()
@@ -35,12 +39,12 @@ def check_sign_in(service='google'):
     set_expire()
     return True
 
-def require_sign_in(func=None, service='google'):
+def require_sign_in(func=None, need_github=False):
     if func is None:
-        return partial(require_sign_in, service=service)
+        return partial(require_sign_in, need_github=need_github)
     @wraps(func)
     def new_function(*args, **kwargs):
-        if check_sign_in(service) == True:
+        if check_sign_in(need_github=need_github) == True:
             return func(*args, **kwargs)
         else:
             return redirect(url_for('index'))
