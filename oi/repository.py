@@ -57,8 +57,21 @@ def show_repository(repository_id):
                                .first()
         token = repository.owner_user.github_access_token
         oauth_session = auth_github.get_session(token=token)
-        api_path = 'repositories/%s/issues' % repository.github_id
+        api_path = 'repositories/%s/issues?state=%s&labels=%s'
+        state = 'open'
+        if 'state' in request.args:
+            state_argument = request.args['state']
+            if state_argument == 'closed' or state_argument == 'all':
+                state = state_argument
+        labels = ''
+        if 'labels' in request.args:
+            labels = request.args['labels']
+        api_path = api_path % (repository.github_id, state, labels)
         issues = oauth_session.get(api_path).json()
-        return render_template('repository.html', repository=repository, issues=issues, user=user)
-
+        return render_template('repository.html',
+                               repository=repository,
+                               issues=issues,
+                               state=state,
+                               labels=labels,
+                               user=user)
 

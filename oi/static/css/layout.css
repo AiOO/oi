@@ -143,6 +143,7 @@ div.issue div.title span.label {
   padding: 1px 3px;
   border: 1px solid;
   border-left: 6px solid;
+  cursor: pointer;
 }
 div.issue img.user {
   width: 16px;
@@ -152,5 +153,22 @@ div.issue img.user {
 div.issue span.information {
   line-height: 22px;
   vertical-align: top;
+}
+div.issue.open div.number {
+  color: #0a6;
+}
+a.toggle {
+  color: #999;
+  text-decoration: none;
+}
+a.toggle.active {
+  font-weight: bold;
+  color: #333;
+}
+span.filter {
+  padding: 1px 3px;
+  background-color: #666;
+  font-size: 0.8em;
+  color: #fff;
 }
 

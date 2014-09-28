@@ -1,15 +1,58 @@
 {% extends 'frame.html' %}
 {% block content_block %}
   <h1>{{ repository.full_name }}</h1>
+  <form id="filter-form">
+    <p>
+      <label>State:</label>
+      <select name="state" onchange="submitFilterForm()">
+        <option value="all"{{ ' selected' if state == 'all' }}>All</option>
+        <option value="open"{{ ' selected' if state == 'open' }}>Open</option>
+        <option value="closed"{{ ' selected' if state == 'closed' }}>Closed</option>
+      </select>
+      <br>
+      <span>Add filter:</span>
+      <select>
+        <option>Label</option>
+      </select>
+      <input id="input-new-label" type="text">
+      <button type="button" onclick="addLabelFilterWithInput()">Add</button>
+    </p>
+    <p>
+      <span>Filters:</span>
+      {% for label_filter in labels.split(',') %}
+      <span class="filter">label:{{ label_filter }}</span>
+      {% endfor %}
+    </p>
+    <input type="hidden" id="input-labels" name="labels" value="{{ labels }}">
+  </form>
+  <script type="text/javascript">
+    var newLabelInput = document.getElementById('input-new-label');
+    var labelFilterInput = document.getElementById('input-labels');
+    var filterForm = document.getElementById('filter-form');
+    function addLabelFilterWithInput() {
+      addLabelFilter(newLabelInput.value);
+      newLabelInput.value = "";
+    }
+    function addLabelFilter(label) {
+      if(labelFilterInput.value == "")
+          labelFilterInput.value = label;
+      else
+          labelFilterInput.value = labelFilterInput.value + "," + label;
+      submitFilterForm();
+    }
+    function submitFilterForm() {
+      filterForm.submit();
+    }
+  </script>
   <div class="issues">
     {% for issue in issues %}
-    <div class="issue"> 
+    <div class="issue {{ issue.state }}"> 
       <div class="number">#{{ issue.number }}</div>
       <div class="content">
         <div class="title">
           <span class="title">{{ issue.title }}</span>
           {% for label in issue.labels %}
-          <span class="label" style="border-color: #{{ label.color }};">{{ label.name }}</span>
+          <span class="label" style="border-color: #{{ label.color }};" onclick="addLabelFilter('{{ label.name }}')">{{ label.name }}</span>
           {% endfor %}
         </div>
         <span class="information">Added by {{ issue.user.login }}</span>
