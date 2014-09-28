@@ -1,0 +1,17 @@
+{% extends 'frame.html' %}
+{% block content_block %}
+  <h1>{{ repository.full_name }}</h1>
+  <div class="issues">
+    {% for issue in issues %}
+    <div class="issue"> 
+      <div class="number">#{{ issue.number }}</div>
+      <div class="content">
+        <div class="title">{{ issue.title }}</div>
+        <span class="information">Added by {{ issue.user.login }}</span>
+        <img class="user" src="{{ issue.user.avatar_url }}">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

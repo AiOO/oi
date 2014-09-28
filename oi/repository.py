@@ -47,3 +47,18 @@ def add_repository():
                                organization=organization,
                                user=user)
 
+@repository.route('/<repository_id>')
+@require_sign_in()
+def show_repository(repository_id):
+    with db_session_scope() as db_session:
+        user = get_user_in_session(db_session)
+        repository = db_session.query(Repository) \
+                               .filter(Repository.id == repository_id) \
+                               .first()
+        token = repository.owner_user.github_access_token
+        oauth_session = auth_github.get_session(token=token)
+        api_path = 'repositories/%s/issues' % repository.github_id
+        issues = oauth_session.get(api_path).json()
+        return render_template('repository.html', repository=repository, issues=issues, user=user)
+
+

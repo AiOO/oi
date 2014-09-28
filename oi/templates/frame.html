@@ -10,6 +10,7 @@
       <div id="top">
         <span>OI</span>
       </div>
+      <div class="seperator"></div>
       {% if user %}
       <div id="account">
         <img src="{{ user.avatar }}">
@@ -19,16 +20,19 @@
           <a class="button">Sign out</a>
         </div>
       </div>
+      <div class="seperator"></div>
       <div class="label">
         My repositories
       </div>
       {% if user.github_access_token %}
       <ul id="repositories">
-        {% for repository in user.repositories %}
-        <li><a>{{ repository.name }}</a></li>
+        {% for repo in user.repositories %}
+        <li class="{{ 'selected' if repository and repo.id == repository.id }}"><a href="{{ url_for('repository.show_repository', repository_id=repo.id) }}">{{ repo.name }}</a></li>
         {% endfor %}
-        <li><a class="button" href="{{ url_for('repository.add_repository') }}">Add Repository</a></li>
       </ul>
+      <div>
+        <a class="button" href="{{ url_for('repository.add_repository') }}">Add Repository</a>
+      </div>
       {% else %}
       <div id="signin">
         <p>You have to sign in with GitHub to add your repository.</p>
@@ -38,13 +42,15 @@
         </a>
       </div>
       {% endif %}
+      <div class="seperator"></div>
       <div class="label">
-        Accessible repositories
+        Following repositories
       </div>
       <ul id="repositories">
-        <li><a>Rust</a></li>
-        <li><a class="button">Add Repository</a></li>
       </ul>
+      <div>
+        <a class="button">Follow Repository</a>
+      </div>
       {% else %}
       <div id="signin">
         <p>You have to sign in to use OI service.</p>
