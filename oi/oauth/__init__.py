@@ -89,6 +89,7 @@ def catch_code(service):
             else:
                 # TODO: Exchange github account?
                 pass
+            sign_in(user)
             db_session.add(user)
         return redirect(url_for('dashboard'))
     else:
