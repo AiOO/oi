@@ -170,5 +170,6 @@ span.filter {
   background-color: #666;
   font-size: 0.8em;
   color: #fff;
+  cursor: pointer;
 }
 

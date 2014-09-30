@@ -18,10 +18,10 @@
       <button type="button" onclick="addLabelFilterWithInput()">Add</button>
     </p>
     <p>
-      <span>Filters:</span>
-      {% for label_filter in labels.split(',') %}
-      <span class="filter">label:{{ label_filter }}</span>
-      {% endfor %}
+      <span>Filters(click to remove):</span>
+      {% if labels != '' %}{% for label_filter in labels.split(',') %}
+      <span class="filter" onclick="removeLabelFilter('{{ label_filter }}')">label:{{ label_filter }}</span>
+      {% endfor %}{% endif %}
     </p>
     <input type="hidden" id="input-labels" name="labels" value="{{ labels }}">
   </form>
@@ -34,10 +34,21 @@
       newLabelInput.value = "";
     }
     function addLabelFilter(label) {
+      if(labelFilterInput.value.indexOf(label) != -1) {
+          alert("Already registered.");
+          return;
+      }
       if(labelFilterInput.value == "")
           labelFilterInput.value = label;
       else
           labelFilterInput.value = labelFilterInput.value + "," + label;
+      submitFilterForm();
+    }
+    function removeLabelFilter(label) {
+      labelFilterInput.value = labelFilterInput.value.replace(label, "");
+      labelFilterInput.value = labelFilterInput.value.replace(",,", "");
+      if(labelFilterInput.value.indexOf(",") == 0)
+          labelFilterInput.value = labelFilterInput.value.substr(1);
       submitFilterForm();
     }
     function submitFilterForm() {
