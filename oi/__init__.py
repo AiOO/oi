@@ -22,6 +22,11 @@ def index():
             message = "Your account has not verified it's email!"
     return render_template('frame.html', message=message)
 
+@app.route("/sign_out")
+def do_sign_out():
+    sign_out()
+    return redirect(url_for("index"))
+
 @app.route("/dashboard")
 @require_sign_in()
 def dashboard():
